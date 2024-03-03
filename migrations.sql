@@ -13,7 +13,7 @@ create table access_logs
     user_agent text
 );
 
-create index on access_logs (host);
+create index on access_logs (time, host);
 create index on access_logs (path);
 
 commit;

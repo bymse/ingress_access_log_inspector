@@ -6,6 +6,7 @@ from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 import storage
 import parser
+from datetime import datetime
 
 
 def get_env(env_var_name):
@@ -34,8 +35,11 @@ def inspect(namespace):
             nginx_pod = pod_list.items[0].metadata.name
             print(f"Watching logs from {nginx_pod} pod.")
 
+            last_time = datetime.timestamp(storage.get_last_time()) + 1
+            since_seconds = 0 if last_time is None else int(time.time() - last_time)
+
             logs = api.read_namespaced_pod_log(name=nginx_pod, namespace=namespace, follow=True,
-                                               _preload_content=False)
+                                               _preload_content=False, since_seconds=since_seconds)
             for log in logs:
                 parsed_log = parser.parse_log(log.decode("utf-8").strip())
                 if parsed_log:

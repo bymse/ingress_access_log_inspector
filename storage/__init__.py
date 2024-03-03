@@ -26,7 +26,13 @@ def save_log(log_data):
                   log_data['referer'], log_data['user_agent']))
 
 
-
+def get_last_time():
+    with __connection.cursor() as cursor:
+        cursor.execute("SELECT time FROM access_logs ORDER BY time DESC LIMIT 1")
+        row = cursor.fetchone()
+        if row is not None:
+            return row[0]
+        return None
 
 def close_connection():
     global __connection
