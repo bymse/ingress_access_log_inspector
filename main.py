@@ -66,3 +66,4 @@ if __name__ == "__main__":
         get_env('PG_PASSWORD')
     )
     inspect(get_env('K8S_INGRESS_NAMESPACE'))
+    storage.close_connection()

@@ -24,3 +24,12 @@ def save_log(log_data):
             """, (log_data['request_id'], log_data['host'], log_data['client_ip'], log_data['time'],
                   log_data['method'], log_data['path'], log_data['query'], log_data['status'],
                   log_data['referer'], log_data['user_agent']))
+
+
+
+
+def close_connection():
+    global __connection
+    if __connection is not None:
+        __connection.close()
+        __connection = None
