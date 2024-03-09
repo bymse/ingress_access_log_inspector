@@ -14,7 +14,6 @@ def get_env(env_var_name):
 
 
 def inspect(namespace):
-    config.load_kube_config()
     api = client.CoreV1Api()
 
     while True:
@@ -49,6 +48,9 @@ def inspect(namespace):
         except ApiException as e:
             if e.status == 404:
                 print("Ingress Nginx pod not found.")
+            elif e.status == 403:
+                print(f"No access to k8s API: {e}")
+                exit(-1)
             else:
                 print(f"Kubernetes API error: {e}")
             time.sleep(10)
