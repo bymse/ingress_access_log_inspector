@@ -34,8 +34,8 @@ def inspect(namespace):
             nginx_pod = pod_list.items[0].metadata.name
             print(f"Watching logs from {nginx_pod} pod.")
 
-            last_time = datetime.timestamp(storage.get_last_time()) + 1
-            since_seconds = 0 if last_time is None else int(time.time() - last_time)
+            last_time = storage.get_last_time()
+            since_seconds = None if last_time is None else int(time.time() - datetime.timestamp(last_time) + 1)
 
             logs = api.read_namespaced_pod_log(name=nginx_pod, namespace=namespace, follow=True,
                                                _preload_content=False, since_seconds=since_seconds)
