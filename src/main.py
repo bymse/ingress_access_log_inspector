@@ -73,7 +73,8 @@ if __name__ == "__main__":
         get_env('PG_PORT'),
         get_env('PG_DB'),
         get_env('PG_USER'),
-        get_env('PG_PASSWORD')
+        get_env('PG_PASSWORD'),
+        get_env('PG_SSLMODE')
     )
     inspect(get_env('K8S_INGRESS_NAMESPACE'))
     storage.close_connection()

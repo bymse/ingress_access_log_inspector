@@ -3,7 +3,7 @@ import psycopg2
 __connection = None
 
 
-def ensure_connected(host, port, dbname, user, password):
+def ensure_connected(host, port, dbname, user, password, sslmode):
     global __connection
     if __connection is None:
         __connection = psycopg2.connect(
@@ -11,7 +11,8 @@ def ensure_connected(host, port, dbname, user, password):
             port=port,
             dbname=dbname,
             user=user,
-            password=password
+            password=password,
+            sslmode=sslmode
         )
         __connection.autocommit = True
 
