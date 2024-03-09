@@ -61,7 +61,11 @@ def inspect(namespace):
 
 
 if __name__ == "__main__":
-    config.load_kube_config()
+    try:
+        config.load_incluster_config()
+    except config.config_exception.ConfigException:
+        config.load_kube_config()
+
     storage.ensure_connected(
         get_env('PG_HOST'),
         get_env('PG_PORT'),
